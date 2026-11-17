@@ -1,0 +1,22 @@
+/* Demo director caption (light lower-third) + presentation mode */
+.dir-caption { position: fixed; left: 20px; bottom: 20px; z-index: 9000; width: min(640px, calc(100vw - 520px));
+  min-width: 340px; border-radius: var(--radius); overflow: hidden; pointer-events: none;
+  background: var(--bg-1); border: 1px solid var(--line); border-left: 3px solid var(--accent);
+  box-shadow: var(--shadow-lg); opacity: 0; transform: translateY(8px);
+  transition: opacity .15s ease, transform .15s ease; }
+.dir-caption.show { opacity: 1; transform: none; }
+.dir-caption.paused { border-left-color: var(--warn); }
+.dir-bar { height: 2px; background: var(--bg-3); }
+.dir-bar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .3s ease; }
+.dir-body { padding: 12px 16px 10px; }
+.dir-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
+.dir-step { font-family: var(--mono); font-size: 11.5px; color: var(--text-3); }
+.dir-title { font-size: 15px; font-weight: 600; color: var(--text); }
+.dir-text { font-size: 13.5px; line-height: 1.5; color: var(--text-2); min-height: 40px; }
+.dir-ctl { display: flex; gap: 4px; justify-content: flex-end; margin-top: 8px; pointer-events: auto; }
+.dir-ctl .btn { height: 26px; padding: 0 10px; font-size: 12px; }
+
+/* Presentation mode */
+body.presenting { font-size: 16px; }
+body.presenting .secondary-controls { display: none !important; }
+body.cursor-hidden, body.cursor-hidden * { cursor: none !important; }

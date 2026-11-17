@@ -1,0 +1,396 @@
+{
+ "type": "hello",
+ "assets": {
+  "F1": {
+   "name": "Reheating Furnace",
+   "tags": [
+    "FurnaceTemp",
+    "FuelFlow",
+    "SlabExitTemp"
+   ]
+  },
+  "R1": {
+   "name": "Roughing Stand",
+   "tags": [
+    "Vibration",
+    "BearingTemp",
+    "RollForce",
+    "MotorCurrent"
+   ]
+  },
+  "R2": {
+   "name": "Finishing Gearbox",
+   "tags": [
+    "Vibration",
+    "OilTemp",
+    "Torque"
+   ]
+  },
+  "CB": {
+   "name": "Laminar Cooling Bank",
+   "tags": [
+    "WaterFlow",
+    "PumpPressure",
+    "StripExitTemp"
+   ]
+  },
+  "CL": {
+   "name": "Down Coiler",
+   "tags": [
+    "Misalignment",
+    "Tension",
+    "MotorCurrent"
+   ]
+  }
+ },
+ "tags": {
+  "F1.FurnaceTemp": {
+   "unit": "°C",
+   "sigma": 3.0,
+   "limit": [
+    "lo",
+    1205
+   ],
+   "label": "Furnace zone temp"
+  },
+  "F1.FuelFlow": {
+   "unit": "Nm³/h",
+   "sigma": 25.0,
+   "limit": [
+    "hi",
+    2100
+   ],
+   "label": "Fuel gas flow"
+  },
+  "F1.SlabExitTemp": {
+   "unit": "°C",
+   "sigma": 4.0,
+   "limit": [
+    "lo",
+    1125
+   ],
+   "label": "Slab exit temp"
+  },
+  "R1.Vibration": {
+   "unit": "mm/s",
+   "sigma": 0.25,
+   "limit": [
+    "hi",
+    7.1
+   ],
+   "label": "Stand vibration"
+  },
+  "R1.BearingTemp": {
+   "unit": "°C",
+   "sigma": 1.0,
+   "limit": [
+    "hi",
+    88
+   ],
+   "label": "Work-roll bearing temp"
+  },
+  "R1.RollForce": {
+   "unit": "MN",
+   "sigma": 0.25,
+   "limit": [
+    "hi",
+    24.5
+   ],
+   "label": "Roll separating force"
+  },
+  "R1.MotorCurrent": {
+   "unit": "A",
+   "sigma": 20.0,
+   "limit": [
+    "hi",
+    1450
+   ],
+   "label": "Main drive current"
+  },
+  "R2.Vibration": {
+   "unit": "mm/s",
+   "sigma": 0.2,
+   "limit": [
+    "hi",
+    5.6
+   ],
+   "label": "Gearbox vibration"
+  },
+  "R2.OilTemp": {
+   "unit": "°C",
+   "sigma": 1.0,
+   "limit": [
+    "hi",
+    78
+   ],
+   "label": "Gear oil temp"
+  },
+  "R2.Torque": {
+   "unit": "kNm",
+   "sigma": 6.0,
+   "limit": [
+    "hi",
+    560
+   ],
+   "label": "Spindle torque"
+  },
+  "CB.WaterFlow": {
+   "unit": "m³/h",
+   "sigma": 15.0,
+   "limit": [
+    "lo",
+    690
+   ],
+   "label": "Header water flow"
+  },
+  "CB.PumpPressure": {
+   "unit": "bar",
+   "sigma": 0.08,
+   "limit": [
+    "lo",
+    4.5
+   ],
+   "label": "Pump discharge pressure"
+  },
+  "CB.StripExitTemp": {
+   "unit": "°C",
+   "sigma": 4.0,
+   "limit": [
+    "hi",
+    680
+   ],
+   "label": "Coiling temp"
+  },
+  "CL.Misalignment": {
+   "unit": "mm",
+   "sigma": 0.04,
+   "limit": [
+    "hi",
+    1.2
+   ],
+   "label": "Mandrel misalignment"
+  },
+  "CL.Tension": {
+   "unit": "kN",
+   "sigma": 0.4,
+   "limit": [
+    "lo",
+    33
+   ],
+   "label": "Strip tension"
+  },
+  "CL.MotorCurrent": {
+   "unit": "A",
+   "sigma": 8.0,
+   "limit": [
+    "hi",
+    545
+   ],
+   "label": "Coiler drive current"
+  }
+ },
+ "actions": {
+  "derate": {
+   "label": "Derate line",
+   "param": "pct",
+   "desc": "Reduce line speed; slows mechanical wear."
+  },
+  "planned_maintenance": {
+   "label": "Planned maintenance",
+   "param": null,
+   "desc": "Controlled 30-min stop; asset restored to health."
+  },
+  "switch_standby_pump": {
+   "label": "Switch to standby pump",
+   "param": null,
+   "desc": "3-min changeover to the standby cooling pump (CB only)."
+  },
+  "increase_lube": {
+   "label": "Boost lubrication",
+   "param": null,
+   "desc": "Raise oil circulation; slows gearbox degradation 75 % (R2 only)."
+  },
+  "recalibrate_sensor": {
+   "label": "Recalibrate sensor",
+   "param": null,
+   "desc": "Clear a faulty instrument channel; no downtime."
+  },
+  "emergency_stop": {
+   "label": "Emergency stop",
+   "param": null,
+   "desc": "Trip the whole line now."
+  },
+  "restart": {
+   "label": "Restart line",
+   "param": null,
+   "desc": "Resume rolling after a stop."
+  }
+ },
+ "allowed": {
+  "F1": [
+   "derate",
+   "planned_maintenance",
+   "recalibrate_sensor",
+   "emergency_stop"
+  ],
+  "R1": [
+   "derate",
+   "planned_maintenance",
+   "recalibrate_sensor",
+   "emergency_stop"
+  ],
+  "R2": [
+   "derate",
+   "increase_lube",
+   "planned_maintenance",
+   "recalibrate_sensor",
+   "emergency_stop"
+  ],
+  "CB": [
+   "derate",
+   "switch_standby_pump",
+   "planned_maintenance",
+   "recalibrate_sensor",
+   "emergency_stop"
+  ],
+  "CL": [
+   "derate",
+   "planned_maintenance",
+   "recalibrate_sensor",
+   "emergency_stop"
+  ]
+ },
+ "faults": {
+  "F1": {
+   "id": "burner_fouling",
+   "name": "Burner fouling / refractory loss",
+   "sig": {
+    "FurnaceTemp": -60,
+    "FuelFlow": 450,
+    "SlabExitTemp": -80
+   },
+   "action": "planned_maintenance",
+   "story": "Fouled burners lose heat transfer: fuel rises to compensate while zone and slab temps sag."
+  },
+  "R1": {
+   "id": "bearing_wear",
+   "name": "Work-roll bearing wear",
+   "sig": {
+    "Vibration": 6.0,
+    "BearingTemp": 28,
+    "RollForce": 2.0,
+    "MotorCurrent": 150
+   },
+   "action": "planned_maintenance",
+   "story": "Spalling bearing raises vibration and friction heat; drive current and roll force creep up."
+  },
+  "R2": {
+   "id": "lube_loss",
+   "name": "Gearbox lubrication loss",
+   "sig": {
+    "Vibration": 5.0,
+    "OilTemp": 30,
+    "Torque": 70
+   },
+   "action": "increase_lube",
+   "story": "Degraded oil film heats the gearbox and adds mesh vibration and torque ripple."
+  },
+  "CB": {
+   "id": "pump_cavitation",
+   "name": "Cooling pump cavitation",
+   "sig": {
+    "WaterFlow": -320,
+    "PumpPressure": -2.2,
+    "StripExitTemp": 90
+   },
+   "action": "switch_standby_pump",
+   "story": "Cavitating impeller drops flow and pressure; strip leaves the table too hot."
+  },
+  "CL": {
+   "id": "mandrel_misalignment",
+   "name": "Coiler mandrel misalignment",
+   "sig": {
+    "Misalignment": 1.6,
+    "Tension": 0.0,
+    "MotorCurrent": 80
+   },
+   "action": "planned_maintenance",
+   "story": "Misaligned mandrel makes strip tension oscillate and loads the drive."
+  }
+ },
+ "scenarios": {
+  "S1": {
+   "title": "Roughing-stand bearing wear",
+   "asset": "R1",
+   "kind": "fault",
+   "rate": 0.006666666666666667,
+   "blurb": "Slow spalling on the R1 work-roll bearing. Vibration and bearing temperature creep up."
+  },
+  "S2": {
+   "title": "Cooling pump cavitation",
+   "asset": "CB",
+   "kind": "fault",
+   "rate": 0.007142857142857143,
+   "blurb": "Main laminar-cooling pump starts cavitating; flow and pressure sag, strip runs hot."
+  },
+  "S3": {
+   "title": "Vibration sensor glitch",
+   "asset": "R1",
+   "kind": "glitch",
+   "tag": "R1.Vibration",
+   "amp": 9.0,
+   "blurb": "Loose accelerometer cable on R1. Erratic vibration, no real damage — AI should doubt itself."
+  },
+  "S4": {
+   "title": "Finishing gearbox lube loss",
+   "asset": "R2",
+   "kind": "fault",
+   "rate": 0.00909090909090909,
+   "blurb": "Oil film breaks down in the R2 gearbox; oil heats fast with rising mesh vibration."
+  },
+  "S5": {
+   "title": "Furnace burner fouling (cascade)",
+   "asset": "F1",
+   "kind": "fault",
+   "rate": 0.0058823529411764705,
+   "blurb": "Burners foul; colder slabs cascade into higher roll force on R1."
+  },
+  "S6": {
+   "title": "Model outage",
+   "asset": null,
+   "kind": "outage",
+   "ticks": 30,
+   "blurb": "The ML service goes down for 30 min. Watch the provenance badge fall back and recover."
+  }
+ },
+ "levels": {
+  "1": "ML · LightGBM + SHAP",
+  "2": "FALLBACK 1 · Health Engine",
+  "3": "FALLBACK 2 · LLM-estimated"
+ },
+ "reason_codes": {
+  "FALSE_ALARM": "False alarm — asset is fine",
+  "SENSOR_FAULT": "Instrument / sensor fault",
+  "PLANNED_WINDOW": "Will handle in planned window",
+  "PRODUCTION_PRIORITY": "Production priority",
+  "OTHER": "Other (see note)"
+ },
+ "grades": [
+  "Mild steel (IS 2062)",
+  "HSLA (API X65)",
+  "High-carbon (C70)"
+ ],
+ "mode": "auto",
+ "speed": 1,
+ "progress": {
+  "ready": true,
+  "stage": "Models loaded",
+  "pct": 1.0
+ },
+ "assumptions": {
+  "cost_per_min_inr": 22000,
+  "tons_per_min": 10,
+  "unplanned_repair_min": 240,
+  "planned_maintenance_min": 30
+ }
+}

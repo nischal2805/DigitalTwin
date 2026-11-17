@@ -1,0 +1,12 @@
+lightgbm>=4.5
+scikit-learn>=1.6
+shap>=0.49
+numpy>=1.26,<2
+pandas>=2.2
+httpx>=0.27
+pydantic>=2.10
+fastapi>=0.115
+uvicorn[standard]>=0.30
+matplotlib>=3.9
+joblib>=1.4
+pytest>=8.0

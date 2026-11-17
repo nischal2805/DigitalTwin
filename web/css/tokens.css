@@ -1,0 +1,110 @@
+/* Sahayak design system v1 — light, minimal, modern dashboard.
+   Rules: neutral surfaces, ONE accent (slate blue), muted semantic colours used only for status,
+   no glows, no gradients on surfaces, 1px borders + soft shadows, tabular numbers. */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
+
+:root {
+  /* surfaces */
+  --bg-0: #f4f5f7;          /* app background */
+  --bg-1: #ffffff;          /* cards / panels */
+  --bg-2: #f8f9fb;          /* subtle fill: inputs, table headers, hovers */
+  --bg-3: #eef0f4;          /* pressed / selected fill */
+  --line: #e3e6eb;          /* hairline borders */
+  --line-2: #d0d5dd;        /* stronger borders, input outlines */
+
+  /* text */
+  --text: #111827;
+  --text-2: #4b5563;
+  --text-3: #8a94a6;
+
+  /* single accent */
+  --accent: #3f5bd8;
+  --accent-2: #eef1fd;      /* accent tint background */
+  --accent-3: #c7d0f7;      /* accent tint border */
+
+  /* semantic (muted) */
+  --ok: #1f8a5b;    --ok-bg: #eaf6f0;
+  --warn: #b7791f;  --warn-bg: #fdf5e7;
+  --bad: #c2410c;   --bad-bg: #fdf0ea;
+  --crit: #b42318;  --crit-bg: #fdecea;
+  --heat: #c2410c;          /* molten-steel reference, use sparingly */
+  --heat-2: #d97706;
+  --cyan: #0e7490;
+
+  /* provenance levels (muted) */
+  --ml: #1f8a5b;            /* Level 1 · LightGBM + SHAP */
+  --engine: #b7791f;        /* Level 2 · Health Engine */
+  --llm: #6d4fc2;           /* Level 3 · LLM-estimated */
+
+  /* asset identity (desaturated; match the report figures) */
+  --F1: #c2410c; --R1: #2563a8; --R2: #6d4fc2; --CB: #0f7f75; --CL: #a8336b;
+
+  /* dark inset for the mill viewport only */
+  --view-bg: #0f141b;
+
+  --radius: 10px;
+  --radius-sm: 7px;
+  --shadow: 0 1px 2px rgba(16, 24, 40, .05), 0 1px 3px rgba(16, 24, 40, .04);
+  --shadow-lg: 0 12px 32px rgba(16, 24, 40, .12), 0 2px 6px rgba(16, 24, 40, .06);
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg-0); color: var(--text); font-family: var(--font);
+  font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+button, input, select, textarea { font: inherit; color: inherit; }
+.mono, .num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+/* card */
+.panel { background: var(--bg-1); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+.panel-title { font-size: 12px; font-weight: 600; color: var(--text-2); letter-spacing: 0; text-transform: none; }
+
+/* provenance badge — REQUIRED on risk gauge, anomaly meter and contribution bars */
+.badge { display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px; border-radius: 999px;
+  font-size: 11px; font-weight: 600; white-space: nowrap; border: 1px solid; line-height: 1.5; }
+.badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.badge.l1 { color: var(--ml); border-color: #bfe3d0; background: var(--ok-bg); }
+.badge.l2 { color: var(--engine); border-color: #f0d9ad; background: var(--warn-bg); }
+.badge.l3 { color: var(--llm); border-color: #d9cff3; background: #f4f0fc; }
+.badge.stale { color: var(--text-3); border-color: var(--line-2); background: var(--bg-2); }
+
+/* buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 32px; padding: 0 12px;
+  border-radius: var(--radius-sm); border: 1px solid var(--line-2); background: var(--bg-1); cursor: pointer;
+  font-weight: 500; font-size: 13px; color: var(--text); box-shadow: 0 1px 2px rgba(16, 24, 40, .04);
+  transition: background .15s, border-color .15s, color .15s; }
+.btn:hover:not(:disabled) { background: var(--bg-2); border-color: #b9c0cc; }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.primary:hover:not(:disabled) { background: #3550c4; border-color: #3550c4; }
+.btn.good { color: var(--ok); border-color: #bfe3d0; background: var(--ok-bg); }
+.btn.warn { color: var(--warn); border-color: #f0d9ad; background: var(--warn-bg); }
+.btn.bad { color: var(--crit); border-color: #f5c6c0; background: var(--crit-bg); }
+.btn.ghost { background: transparent; border-color: transparent; box-shadow: none; }
+.btn.ghost:hover:not(:disabled) { background: var(--bg-3); }
+.btn:focus-visible, select:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* segmented control: <div class="seg"><button aria-pressed="true">…</button>…</div> */
+.seg { display: inline-flex; padding: 2px; gap: 2px; background: var(--bg-3); border-radius: 8px; }
+.seg button { height: 28px; padding: 0 10px; border: 0; border-radius: 6px; background: transparent; cursor: pointer;
+  font-size: 12.5px; font-weight: 500; color: var(--text-2); }
+.seg button[aria-pressed="true"], .seg button.on { background: var(--bg-1); color: var(--text); box-shadow: var(--shadow); }
+
+/* form fields */
+select, input[type="text"], input[type="search"], textarea { height: 32px; padding: 0 10px; border: 1px solid var(--line-2);
+  border-radius: var(--radius-sm); background: var(--bg-1); font-size: 13px; }
+textarea { height: auto; padding: 8px 10px; }
+input[type="range"] { accent-color: var(--accent); }
+
+.chip { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 999px;
+  background: var(--bg-1); border: 1px solid var(--line); font-size: 12px; font-weight: 500; color: var(--text-2); }
+
+.risk-low { color: var(--ok); } .risk-med { color: var(--warn); } .risk-high { color: var(--bad); } .risk-crit { color: var(--crit); }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: #d3d8e0; border-radius: 10px; border: 2px solid var(--bg-0); }
+::-webkit-scrollbar-track { background: transparent; }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }

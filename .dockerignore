@@ -1,0 +1,10 @@
+.git
+models
+data
+reports
+docs
+**/__pycache__
+**/.pytest_cache
+.env
+.claude
+*.log
